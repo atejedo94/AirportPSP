@@ -387,7 +387,7 @@ public class Avio extends Thread {
 	private void onTakingOff(ArrayList<Carrer> salida) {
 
 		this.setDirection(Direction.BACKWARD);
-		this.setSpeed(5);
+		this.setSpeed(20);
 
 		// System.out.println(position);
 
@@ -413,12 +413,21 @@ public class Avio extends Thread {
 			}
 
 		}
-		waitTime();
-
 		if (this.way.getId().contains("H2")) {
-			System.out.println("Estoy en H2!");
 			this.setDirection(Direction.FORWARD);
 		}
+		if (this.way.getId().contains("V2")) {
+			this.setDirection(Direction.BACKWARD);
+			System.out.println("Estoy en V2");
+			try {
+
+				this.imgCar = ImageIO.read(new File("planeAirArriba.png"));
+			} catch (Exception e) {
+			}		}
+
+		waitTime();
+
+
 
 		// TO- Do, que este metodo solo sea para salir del finger, hacer otro
 		// que sirva para despegar?
