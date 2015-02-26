@@ -30,12 +30,11 @@ public class Mapa extends Canvas implements Runnable {
     private int offsetY;
     private int cmCarrerWidth;
     private int cmCarrerMark;
-    private BufferedImage imgMap, imgBg ,imgFing;
+    private BufferedImage imgMap, imgBg;
     private Controlador controlador;
     private ArrayList<Carrer> carrers;
     private ArrayList<CrossRoad> crossroads;
-    private ArrayList<Fingers> fingers;
-    private Carrer way;
+    public ArrayList<Fingers> fingers;
 
     public Mapa(int cityCmWidth, int cityCmHeight, int mapPixWidth, int mapPixHeight) {
         this.cityCmWidth = cityCmWidth;
@@ -70,6 +69,10 @@ public class Mapa extends Canvas implements Runnable {
         }
     }
 
+    public ArrayList<Fingers> getFingers(){
+    	return this.fingers;
+    }
+    
     public ArrayList<Carrer> getCarrers() {
         return this.carrers;
     }
@@ -143,7 +146,8 @@ public class Mapa extends Canvas implements Runnable {
     	int auxX=8000;
     	int auxY=8000;
     	for(int i=0;i<8;i++){
-    		Fingers fing = new Fingers();
+    	    Fingers fing = new Fingers();
+
     		fing.setNom(nom+i);
     		fing.setPosicioX((auxX*(i+1))/3);
     		fing.setPosicioY(auxY);
@@ -317,4 +321,14 @@ public class Mapa extends Canvas implements Runnable {
 		this.controlador=traffic;
 		
 	}
+	
+//	public boolean isFirstFingerEmpty(ArrayList fingers){
+//		
+//		if (fingers.get(0) == Fingers.Estat.buit) {
+//			return true;
+//		}
+//		
+//		return false;
+//		
+//	}
 }

@@ -12,8 +12,11 @@ import javax.swing.ImageIcon;
 
 public class Avio extends Thread {
 
+	Controlador cont;
 	private CrossRoad cruce = null;
 	int position = 0;
+	Mapa map;
+	Fingers finger;
 
 	public static enum Orientation {
 
@@ -281,7 +284,6 @@ public class Avio extends Thread {
 	}
 
 	public int getWidthInCm() {
-		// TODO Auto-generated method stub
 		return this.cmWidth;
 	}
 
@@ -317,30 +319,41 @@ public class Avio extends Thread {
 			iniY = (int) ((((this.way.cmFinY + this.way.cmIniY) / 2 - 200) / factorY) + offsetY);
 			iniX = (int) (((this.way.cmIniX + this.cmPosition) / factorX) + offsetX);
 
-			try {
+			if (this.direction == Direction.BACKWARD) {
+				try {
 
-				this.imgCar = ImageIO.read(new File("planeAir.png"));
-			} catch (Exception e) {
+					this.imgCar = ImageIO.read(new File("planeAirIzquierda.png"));
+				} catch (Exception e) {
+				}
+			}else if(this.direction == Direction.FORWARD){
+				try {
+
+					this.imgCar = ImageIO.read(new File("planeAir.png"));
+				} catch (Exception e) {
+				}
 			}
 
 		} else if (way instanceof VCarrer) {
 			iniY = (int) (((this.way.cmIniY + this.cmPosition) / factorY) + offsetY);
 			iniX = (int) ((((this.way.cmIniX + way.cmFinX) / 2 - 200) / factorX) + offsetX);
 
-			try {
+			
+			if (this.direction == Direction.BACKWARD) {
+				try {
 
-				this.imgCar = ImageIO.read(new File("planeAir2.png"));
-			} catch (Exception e) {
+					this.imgCar = ImageIO.read(new File("planeAirArriba.png"));
+				} catch (Exception e) {
+				}
+			}else if(this.direction == Direction.FORWARD){
+				try {
+
+					this.imgCar = ImageIO.read(new File("planeAir2.png"));
+				} catch (Exception e) {
+				}
 			}
 
 		}
 
-		// Paint crossroad
-		/*
-		 * g.setColor(Color.MAGENTA); g.fillRect(iniX, iniY, finX, finY);
-		 * 
-		 * g.setColor(Color.BLACK); g.drawRect(iniX, iniY, finX, finY);
-		 */
 		g.drawImage(this.imgCar, iniX, iniY, finX, finY, null);
 
 	}
@@ -361,11 +374,12 @@ public class Avio extends Thread {
 
 	public void run() {
 		direction = Direction.FORWARD;
-
+		
+		cont.impFuckingFingerState();
+		
 		while (true) {
 
-			// System.out.println(this.getEstat());
-
+			
 			if (estat == EstatAvio.LANDING) {
 				cambiarCalle(Ruta);
 			} else if (estat == EstatAvio.ONFINGER) {
@@ -378,7 +392,7 @@ public class Avio extends Thread {
 
 			}
 
-			// System.out.println("Pos: "+this.getCmPosition());
+//			 System.out.println("Pos: "+this.getCmPosition());
 
 		}
 
@@ -416,17 +430,14 @@ public class Avio extends Thread {
 		if (this.way.getId().contains("H2")) {
 			this.setDirection(Direction.FORWARD);
 		}
-		if (this.way.getId().contains("V2")) {
-			this.setDirection(Direction.BACKWARD);
-			System.out.println("Estoy en V2");
-			try {
 
-				this.imgCar = ImageIO.read(new File("planeAirArriba.png"));
-			} catch (Exception e) {
-			}		}
-
+		
+		//Elimina avion del array en la pos 0 ?
+//		if (this.cmPosition <= 500) {
+//			cont.deleteAvion(this);
+//			System.out.println("Avion eliminado");
+//		}
 		waitTime();
-
 
 
 		// TO- Do, que este metodo solo sea para salir del finger, hacer otro
@@ -489,10 +500,6 @@ public class Avio extends Thread {
 			this.setEstat(EstatAvio.ONFINGER);
 		}
 
-		// if (this.way.getId().contains("F1")) {
-		//
-		// this.setEstat(EstatAvio.ONFINGER);
-		// }
 
 	}
 
@@ -511,4 +518,6 @@ public class Avio extends Thread {
 	public void setSalida(ArrayList<Carrer> salida) {
 		Salida = salida;
 	}
+	
+
 }

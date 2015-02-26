@@ -15,6 +15,10 @@ public class Controlador implements Runnable{
 	ArrayList<Carrer> ArrayListCarrers=new ArrayList<Carrer>();
 	ArrayList<Carrer> ArrayListRuta = new ArrayList<Carrer>();
 	ArrayList<Carrer> ArrayDespegue = new ArrayList<Carrer>();
+	ArrayList<Fingers> arrfinger;
+	Fingers fing;
+	Mapa map;
+
 	
 	
 	
@@ -63,8 +67,9 @@ public class Controlador implements Runnable{
 		
 	}//add avio
 //	
-//	public static void main(String[] args){}//main
 
+	
+	
 	@Override
 	public void run() {
 		
@@ -96,11 +101,22 @@ public class Controlador implements Runnable{
        
 		
 	}
-
-	public void moureAvio() {
-		Avio av1 =ArrayListAvions.get(0);
-		av1.setCmPosition(3);
-		// TODO Auto-generated method stub
+	
+	public void impFuckingFingerState(){
+		System.out.println(map.fingers.get(0).getEstat());
+	}
+	
+	public void setFirstFingerFull(){
+		
+		arrfinger.get(0).setOcupat();
+		
+	}
+	
+	
+	
+	public void deleteAvion(Avio a){
+		
+		ArrayListAvions.remove(a);
 		
 	}
 
