@@ -12,7 +12,6 @@ import javax.swing.ImageIcon;
 
 public class Avio extends Thread {
 
-	Controlador cont;
 	private CrossRoad cruce = null;
 	int position = 0;
 	Mapa map;
@@ -147,8 +146,9 @@ public class Avio extends Thread {
 	private Direction direction;
 	private boolean innter;
 	private Orientation orientation;
-	private ArrayList<Carrer> Ruta, Salida;
+	private ArrayList<Carrer> Ruta, Salida, finger1;
 	private EstatAvio estat;
+	private Controlador controlador;
 
 	public static enum EstatAvio {
 
@@ -157,7 +157,7 @@ public class Avio extends Thread {
 
 	public Avio(String idAvio, Carrer way, int speed,
 			ArrayList<Carrer> arrayListRuta, EstatAvio estat,
-			ArrayList<Carrer> arrayDespegue) {
+			ArrayList<Carrer> arrayDespegue, Controlador controlador, ArrayList<Carrer> arrayListFinger1) {
 		this.idAvio = idAvio;
 		this.cmLong = 800;
 		this.cmWidth = 400;
@@ -166,6 +166,8 @@ public class Avio extends Thread {
 		this.factorX = this.factorY = -1;
 		this.course = -1;
 		this.Ruta = arrayListRuta;
+		this.finger1 = arrayListFinger1;
+		
 		this.Salida = arrayDespegue;
 		this.setEstat(estat);
 
@@ -174,6 +176,8 @@ public class Avio extends Thread {
 
 		this.setWay(way);
 		this.setDirection(Direction.FORWARD);
+		
+		this.controlador = controlador;
 	}
 
 	public void setEstatAvio(EstatAvio estat) {
@@ -375,21 +379,27 @@ public class Avio extends Thread {
 	public void run() {
 		direction = Direction.FORWARD;
 		
-		cont.impFuckingFingerState();
 		
 		while (true) {
 
-			
+
 			if (estat == EstatAvio.LANDING) {
+				controlador.enter(this);
 				cambiarCalle(Ruta);
-			} else if (estat == EstatAvio.ONFINGER) {
+				
+
+			} 
+			
+			else if (estat == EstatAvio.ONFINGER) {
 				onFinger();
 				position = 0;
+				
+				controlador.salir(this);
 			}
 
 			else if (estat == EstatAvio.TAKINGOFF) {
 				onTakingOff(Salida);
-
+				
 			}
 
 //			 System.out.println("Pos: "+this.getCmPosition());
@@ -431,17 +441,8 @@ public class Avio extends Thread {
 			this.setDirection(Direction.FORWARD);
 		}
 
-		
-		//Elimina avion del array en la pos 0 ?
-//		if (this.cmPosition <= 500) {
-//			cont.deleteAvion(this);
-//			System.out.println("Avion eliminado");
-//		}
 		waitTime();
 
-
-		// TO- Do, que este metodo solo sea para salir del finger, hacer otro
-		// que sirva para despegar?
 	}
 
 	private void onFinger() {
@@ -467,8 +468,45 @@ public class Avio extends Thread {
 
 	}
 
+//	private void goFinger1(ArrayList<Carrer> ruta2) {
+//
+//		if (way.insideAnyCrossRoad(cmPosition)) {
+//
+//			cruce = way.intersectedCrossRoad(cmPosition);
+//			if (position < ruta2.size()) {
+//				if (cruce.getCarrer(way).equals(ruta2.get(position))) {
+//
+//					Carrer anterior = way;
+//					this.way = cruce.getCarrer(way);
+//					Carrer actual = way;
+//
+//					this.direction = way.dir;
+//
+//					this.cmPosition = this.way
+//							.getCmPosition(anterior.getCmPosX(this.cmPosition,
+//									this.direction), anterior.getCmPosY(
+//									this.cmPosition, this.direction),
+//									this.direction);
+//
+//					position++;
+//
+//				}
+//			}
+//
+//		}
+//
+//		waitTime();
+//
+//		if (this.way.getId().contains("F1") && !this.isOnCrossRoad()) {
+//			this.setEstat(EstatAvio.ONFINGER);
+//		}
+//
+//
+//	}
+	
 	private void cambiarCalle(ArrayList<Carrer> ruta2) {
 
+		
 		if (way.insideAnyCrossRoad(cmPosition)) {
 
 			cruce = way.intersectedCrossRoad(cmPosition);

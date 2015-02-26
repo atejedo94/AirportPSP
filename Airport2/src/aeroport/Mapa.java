@@ -36,7 +36,8 @@ public class Mapa extends Canvas implements Runnable {
     private ArrayList<CrossRoad> crossroads;
     public ArrayList<Fingers> fingers;
 
-    public Mapa(int cityCmWidth, int cityCmHeight, int mapPixWidth, int mapPixHeight) {
+
+    public Mapa(int cityCmWidth, int cityCmHeight, int mapPixWidth, int mapPixHeight, Controlador controlador) {
         this.cityCmWidth = cityCmWidth;
         this.cityCmHeight = cityCmHeight;
         this.mapWidth = mapPixWidth;
@@ -53,7 +54,7 @@ public class Mapa extends Canvas implements Runnable {
         this.carrers = new ArrayList<Carrer>();
         this.crossroads = new ArrayList<CrossRoad>();
         this.fingers = new ArrayList<Fingers>();
-
+        this.controlador = controlador;
         this.loadCarrers();
         this.calculateCrossRoads();
         this.crearFingers();
@@ -138,6 +139,8 @@ public class Mapa extends Canvas implements Runnable {
     	
     	// Calle Fingers             cmLong,cmPosIniX,CmPosIniY ,Direction,
     	this.carrers.add(new VCarrer("F1",this.cmCarrerWidth,this.cmCarrerMark,2000,2700,7200,Direction.FORWARD));
+    	this.carrers.add(new VCarrer("F2",this.cmCarrerWidth,this.cmCarrerMark,2000,5400,7200,Direction.FORWARD));
+
         
     }
     

@@ -3,10 +3,12 @@ package aeroport;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import aeroport.Fingers.Estat;
+
 public class Fingers {
 
 	enum Estat {
-		ocupat, buit, reservat
+		OCUPADO, VACIO, RESERVADO
 	};
 
 	private Estat estat;
@@ -33,7 +35,7 @@ public class Fingers {
 	}
 
 	public Fingers() {
-		this.estat = Estat.buit;
+		this.estat = Estat.VACIO;
 	}
 
 	public Fingers(String nom, Estat estat, Avio avio, int posicioX,
@@ -43,7 +45,7 @@ public class Fingers {
 		this.avio = avio;
 		this.posicioX = posicioX;
 		this.posicioY = posicioY;
-		this.estat = Estat.buit;
+		this.estat = Estat.VACIO;
 	}
 
 	public void setNom(String nom) {
@@ -100,26 +102,36 @@ public class Fingers {
 
 	}
 
-	public void setOcupat() {
-		this.estat = Estat.ocupat;
+	public void setOcupado() {
+		this.estat = Estat.OCUPADO;
+	}
+	
+	public boolean getOcupado(){
+		return estat == Estat.OCUPADO;
 	}
 
-	public void setBuit() {
-		this.estat = Estat.buit;
+	public void setVacio() {
+		this.estat = Estat.VACIO;
 	}
 
-	public void setReservat() {
-		this.estat = Estat.reservat;
+	public void setReservado() {
+		this.estat = Estat.RESERVADO;
+	}
+	
+	public boolean getReservado(){
+		
+		return estat == Estat.RESERVADO;
 	}
 
-	public boolean EstaBuit() {
+	public boolean getEstaVacio() {
 
-		return estat == Estat.buit;
+		return estat == Estat.VACIO;
 
 	}
 	
 	public void impEstat(){
 		System.out.println(this.getEstat());
 	}
+
 
 }
