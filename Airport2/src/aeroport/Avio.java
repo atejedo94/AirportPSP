@@ -146,7 +146,7 @@ public class Avio extends Thread {
 	private Direction direction;
 	private boolean innter;
 	private Orientation orientation;
-	private ArrayList<Carrer> Ruta, Salida, finger1;
+	private ArrayList<Carrer> Ruta, Salida, finger1, finger2, finger3;
 	private EstatAvio estat;
 	private Controlador controlador;
 
@@ -157,7 +157,7 @@ public class Avio extends Thread {
 
 	public Avio(String idAvio, Carrer way, int speed,
 			ArrayList<Carrer> arrayListRuta, EstatAvio estat,
-			ArrayList<Carrer> arrayDespegue, Controlador controlador, ArrayList<Carrer> arrayListFinger1) {
+			ArrayList<Carrer> arrayDespegue, Controlador controlador, ArrayList<Carrer> arrayListFinger1, ArrayList<Carrer> arrayListFinger2, ArrayList<Carrer> arrayListFinger3) {
 		this.idAvio = idAvio;
 		this.cmLong = 800;
 		this.cmWidth = 400;
@@ -167,6 +167,8 @@ public class Avio extends Thread {
 		this.course = -1;
 		this.Ruta = arrayListRuta;
 		this.finger1 = arrayListFinger1;
+		this.finger2 = arrayListFinger2;
+		this.finger3 = arrayListFinger3;
 		
 		this.Salida = arrayDespegue;
 		this.setEstat(estat);
@@ -382,23 +384,34 @@ public class Avio extends Thread {
 		
 		while (true) {
 
-
+			
 			if (estat == EstatAvio.LANDING) {
-				controlador.enter(this);
-				cambiarCalle(Ruta);
-				
+				if (this.idAvio.contains("A1")) {
+					cambiarCalle(Ruta);
 
+				}else if(this.idAvio.contains("A2")){
+					cambiarCalle(finger1);
+				}
+				else if(this.idAvio.contains("A3")){
+					cambiarCalle(finger2);
+				}
+				else if(this.idAvio.contains("A4")){
+					cambiarCalle(finger3);
+				}
 			} 
 			
 			else if (estat == EstatAvio.ONFINGER) {
 				onFinger();
 				position = 0;
-				
-				controlador.salir(this);
 			}
 
 			else if (estat == EstatAvio.TAKINGOFF) {
 				onTakingOff(Salida);
+
+			}
+			
+			else if(estat == EstatAvio.HIDE){
+				controlador.deleteAvion(this);
 				
 			}
 
@@ -442,6 +455,11 @@ public class Avio extends Thread {
 		}
 
 		waitTime();
+		
+		if (this.way.getId().contains("H1") && this.getCmPosition() == 0) {
+			this.setEstat(EstatAvio.HIDE);
+
+		}
 
 	}
 
@@ -468,41 +486,7 @@ public class Avio extends Thread {
 
 	}
 
-//	private void goFinger1(ArrayList<Carrer> ruta2) {
-//
-//		if (way.insideAnyCrossRoad(cmPosition)) {
-//
-//			cruce = way.intersectedCrossRoad(cmPosition);
-//			if (position < ruta2.size()) {
-//				if (cruce.getCarrer(way).equals(ruta2.get(position))) {
-//
-//					Carrer anterior = way;
-//					this.way = cruce.getCarrer(way);
-//					Carrer actual = way;
-//
-//					this.direction = way.dir;
-//
-//					this.cmPosition = this.way
-//							.getCmPosition(anterior.getCmPosX(this.cmPosition,
-//									this.direction), anterior.getCmPosY(
-//									this.cmPosition, this.direction),
-//									this.direction);
-//
-//					position++;
-//
-//				}
-//			}
-//
-//		}
-//
-//		waitTime();
-//
-//		if (this.way.getId().contains("F1") && !this.isOnCrossRoad()) {
-//			this.setEstat(EstatAvio.ONFINGER);
-//		}
-//
-//
-//	}
+
 	
 	private void cambiarCalle(ArrayList<Carrer> ruta2) {
 
@@ -536,8 +520,14 @@ public class Avio extends Thread {
 
 		if (this.way.getId().contains("F1") && !this.isOnCrossRoad()) {
 			this.setEstat(EstatAvio.ONFINGER);
+		}else if (this.way.getId().contains("F2") && !this.isOnCrossRoad()) {
+			this.setEstat(EstatAvio.ONFINGER);
+		}else if (this.way.getId().contains("F3") && !this.isOnCrossRoad()) {
+			this.setEstat(EstatAvio.ONFINGER);
 		}
-
+			else if (this.way.getId().contains("F4") && !this.isOnCrossRoad()) {
+				this.setEstat(EstatAvio.ONFINGER);
+			}
 
 	}
 

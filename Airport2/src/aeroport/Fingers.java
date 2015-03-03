@@ -5,10 +5,10 @@ import java.awt.Graphics;
 
 import aeroport.Fingers.Estat;
 
-public class Fingers {
+public class Fingers extends VCarrer{
 
 	enum Estat {
-		OCUPADO, VACIO, RESERVADO
+		ocupat, buit, reservat
 	};
 
 	private Estat estat;
@@ -34,20 +34,23 @@ public class Fingers {
 
 	}
 
-	public Fingers() {
-		this.estat = Estat.VACIO;
-	}
 
-	public Fingers(String nom, Estat estat, Avio avio, int posicioX,
-			int posicioY) {
-		this.nom = nom;
-		this.estat = estat;
-		this.avio = avio;
-		this.posicioX = posicioX;
-		this.posicioY = posicioY;
-		this.estat = Estat.VACIO;
-	}
-
+//	public Fingers(String nom, Estat estat, Avio avio, int posicioX,
+//			int posicioY) {
+//		this.nom = nom;
+//		this.estat = estat;
+//		this.avio = avio;
+//		this.posicioX = posicioX;
+//		this.posicioY = posicioY;
+//		this.estat = Estat.buit;
+//	}
+	  public Fingers(String idWay, int cmWayWidth, int cmWayMark, int cmLong, int cmPosIniX, int cmPosIniY, Avio.Direction direccio) {
+	        super(idWay, cmWayWidth, cmWayMark, cmLong, cmPosIniX, cmPosIniY, direccio);
+	        this.cmFinX = this.cmIniX + this.cmWidth;
+	        this.cmFinY = this.cmIniY + this.cmLong;
+	        this.estat = Estat.buit;
+	        this.idWay = idWay;
+	    }
 	public void setNom(String nom) {
 
 		this.nom = nom;
@@ -56,9 +59,17 @@ public class Fingers {
 	
 
 
+
+
 	public Estat getEstat() {
 		return estat;
 	}
+
+
+	public void setEstat(Estat estat) {
+		this.estat = estat;
+	}
+
 
 	public String getNom() {
 
@@ -102,36 +113,25 @@ public class Fingers {
 
 	}
 
-	public void setOcupado() {
-		this.estat = Estat.OCUPADO;
-	}
-	
-	public boolean getOcupado(){
-		return estat == Estat.OCUPADO;
-	}
 
-	public void setVacio() {
-		this.estat = Estat.VACIO;
-	}
-
-	public void setReservado() {
-		this.estat = Estat.RESERVADO;
-	}
-	
-	public boolean getReservado(){
-		
-		return estat == Estat.RESERVADO;
-	}
-
-	public boolean getEstaVacio() {
-
-		return estat == Estat.VACIO;
-
-	}
 	
 	public void impEstat(){
 		System.out.println(this.getEstat());
 	}
+
+
+	public boolean getOcupado() {
+		if (Estat.ocupat != null) {
+			return true;
+		}
+		
+		return false;
+	}
+
+
+
+
+
 
 
 }

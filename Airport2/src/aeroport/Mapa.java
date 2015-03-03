@@ -132,7 +132,7 @@ public class Mapa extends Canvas implements Runnable {
     private void loadCarrers() {
         //this.carrers.add(new HCarrer("H1", this.cmCarrerWidth, this.cmCarrerMark, 59800, 0, 0));
         //this.carrers.add(new VCarrer("V1", this.cmCarrerWidth, this.cmCarrerMark, 20000, 0, 100));
-    	this.carrers.add(new HCarrer("H1",this.cmCarrerWidth,this.cmCarrerMark, 25000, 50,1000,Direction.BACKWARD));
+    	this.carrers.add(new HCarrer("H1",this.cmCarrerWidth,this.cmCarrerMark, 25000, -500,1000,Direction.BACKWARD));
     	this.carrers.add(new HCarrer("H2",this.cmCarrerWidth,this.cmCarrerMark, 22000, 1500,7200,Direction.FORWARD));
     	this.carrers.add(new VCarrer("V1",this.cmCarrerWidth,this.cmCarrerMark, 7000, 1000, 1000,Direction.FORWARD));
     	this.carrers.add(new VCarrer("V2",this.cmCarrerWidth,this.cmCarrerMark, 7000, 23500, 1000,Direction.BACKWARD));
@@ -140,6 +140,18 @@ public class Mapa extends Canvas implements Runnable {
     	// Calle Fingers             cmLong,cmPosIniX,CmPosIniY ,Direction,
     	this.carrers.add(new VCarrer("F1",this.cmCarrerWidth,this.cmCarrerMark,2000,2700,7200,Direction.FORWARD));
     	this.carrers.add(new VCarrer("F2",this.cmCarrerWidth,this.cmCarrerMark,2000,5400,7200,Direction.FORWARD));
+    	this.carrers.add(new VCarrer("F3",this.cmCarrerWidth,this.cmCarrerMark,2000,8100,7200,Direction.FORWARD));
+    	this.carrers.add(new VCarrer("F4",this.cmCarrerWidth,this.cmCarrerMark,2000,10800,7200,Direction.FORWARD));
+//    	this.carrers.add(new VCarrer("F5",this.cmCarrerWidth,this.cmCarrerMark,2000,13500,7200,Direction.FORWARD));
+//    	this.carrers.add(new VCarrer("F6",this.cmCarrerWidth,this.cmCarrerMark,2000,16200,7200,Direction.FORWARD));
+//    	this.carrers.add(new VCarrer("F7",this.cmCarrerWidth,this.cmCarrerMark,2000,16200,7200,Direction.FORWARD));
+//    	this.carrers.add(new VCarrer("F8",this.cmCarrerWidth,this.cmCarrerMark,2000,18900,7200,Direction.FORWARD));
+
+
+
+
+
+
 
         
     }
@@ -148,8 +160,8 @@ public class Mapa extends Canvas implements Runnable {
     	String nom = "finger";
     	int auxX=8000;
     	int auxY=8000;
-    	for(int i=0;i<8;i++){
-    	    Fingers fing = new Fingers();
+    	for(int i=0;i<4;i++){
+    	    Fingers fing = new Fingers(nom, i, i, i, i, i, null);
 
     		fing.setNom(nom+i);
     		fing.setPosicioX((auxX*(i+1))/3);
